@@ -6,16 +6,14 @@ history in SQLite.
 
 ## Setup
 
-1. Set `GEMINI_API_KEY` and a long random `SESSION_SECRET` in your environment. Do not
-   place secret values in frontend code or commit them.
-2. Start the API Server and Responsible AI Chatbot web workflows (or follow
-   `RUN_IN_CODESPACES.md` for a browser-based setup).
-3. Open the web preview, create an account, and start a conversation.
+1. Add `GEMINI_API_KEY` and `SESSION_SECRET` in Replit Secrets. Do not place secret
+   values in frontend code or commit them.
+2. Run the API Server and Responsible AI Chatbot web workflows.
+3. Open the web preview and start a new conversation.
 
 `SESSION_SECRET` should be a long, random value. The app uses it to sign
-HTTP-only, same-site browser session cookies. The app now supports email/password
-sign-up and login; conversations are scoped to the signed-in account. Anonymous
-conversations created before signup are not automatically migrated.
+HTTP-only, same-site browser session cookies. Conversations are isolated by
+browser session; there is no email/password or cross-device account system.
 
 ## Stack and commands
 
@@ -83,7 +81,7 @@ uv sync --locked
 pnpm install --frozen-lockfile
 ```
 
-The app supports email/password accounts and stores password hashes rather than plain-text passwords.
+The app currently has browser-session-based history, not email/password accounts.
 Voice input depends on browser Web Speech API support and microphone permission.
 The response-language selector adds an instruction to the prompt; it is not a
 translation-quality guarantee. The AI and evidence checks are probabilistic and
@@ -92,9 +90,9 @@ can be wrong. Do not use this project as the sole basis for high-stakes decision
 ## Implementation note
 
 The UI includes response-language selection (English, Tamil, Tanglish, Hindi),
-browser speech input, read-aloud controls, and email/password authentication. The
-full dependency install/build has not yet been verified in this environment; use
-the checks in `IMPLEMENTATION_STATUS.md` before deployment.
+browser speech input, and read-aloud controls. These changes have not been
+validated with a complete dependency install/build in this environment; run the
+commands below and fix any reported type/build issues before deployment.
 
 ## Deployment
 

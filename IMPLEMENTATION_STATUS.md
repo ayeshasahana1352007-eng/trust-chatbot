@@ -1,21 +1,16 @@
 # Verity implementation status
 
-## Included in this package
-- Existing React/TypeScript frontend and Python FastAPI backend are preserved.
-- Email/password sign-up and login API routes: `/api/auth/signup`, `/api/auth/login`, `/api/auth/me`, and `/api/auth/logout`.
+## Added in this package
+- Email/password sign-up and login API routes.
 - SQLite users table with unique, case-insensitive email addresses.
 - Password storage using salted PBKDF2-HMAC-SHA256 (310,000 iterations); plain-text passwords are not stored.
 - Signed, HTTP-only session cookie for logged-in accounts; logout clears the cookie.
 - Login/signup screen in the existing React app and a logout action.
-- Conversation ownership is scoped to the authenticated user's ID.
-- Existing chatbot, evidence/claim review, bias analysis, language selector, browser microphone input, and read-aloud features are preserved.
-- `RUN_IN_CODESPACES.md` explains the intended browser-based development setup.
+- Conversation ownership continues to use the authenticated user's ID, so new conversations are scoped per account.
+- Existing chatbot, claim/evidence review, bias analysis, language selector, browser microphone input, and read-aloud features are preserved.
 
-## Checks and limitations
-- Python syntax compilation passed for `main.py`, `db.py`, and `ai_service.py`.
-- ZIP integrity check passed.
-- A full pytest run was attempted but could not complete because the environment could not reach PyPI to download a dependency. The frontend typecheck/build and end-to-end login/chat flow have not been verified here.
-- No password-reset or email-verification flow is included yet.
-- Anonymous chat history created before signup is not automatically migrated into an account.
-- Gemini responses require a valid `GEMINI_API_KEY`; provider quotas still apply. The backend also requires a strong `SESSION_SECRET`.
-- Do not treat this as production-ready until dependencies install, typecheck/build and tests pass, and deployment security is reviewed.
+## Important limitations
+- The project has not been built or run end-to-end in this environment. Python syntax and password-hash logic were checked, but frontend type-checking and API integration tests still need to be run after installing the project's dependencies.
+- There is no password-reset/email-verification flow yet. Use a strong password and do not reuse a sensitive password for this prototype.
+- Anonymous chat history created before signing in is not automatically migrated into a new account.
+- Gemini responses still require a valid `GEMINI_API_KEY`, and the backend requires a strong `SESSION_SECRET`.

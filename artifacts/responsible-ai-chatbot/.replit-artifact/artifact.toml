@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Responsible AI Chatbot"
+description = "A session-private Gemini chat app that retrieves real evidence for claim checks, flags potential bias with uncertainty, and stores conversation history in SQLite."
+version = "1.0.0"
+id = "artifacts/responsible-ai-chatbot"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25359
+
+[services.development]
+run = "pnpm --filter @workspace/responsible-ai-chatbot run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/responsible-ai-chatbot", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/responsible-ai-chatbot/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25359"
+BASE_PATH = "/"
